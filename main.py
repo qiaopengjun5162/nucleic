@@ -27,14 +27,14 @@ app.add_middleware(
 # 注册应用路由，每个路由对应一个模块
 app.include_router(
     checkin_router,  # 注册登记模块
-    prefix='checkin',  # 设置路由的前缀路径
+    prefix='/checkin',  # 设置路由的前缀路径
     dependencies=[Depends(AUTH_SCHEMA)]  # 使用应用依赖的方式增加身份认证
 )
 app.include_router(person_router, prefix='/person')
 app.include_router(auth_router, prefix='/auth')
 # 注册静态资源文件，将前端后端项目整合运行
-app.mount('/web', StaticFiles(directory='web/dist'), 'web')  # 管理端页面项目
-app.mount('/h5', StaticFiles(directory='h5/dist'), 'h5')  # 移动端项目
+# app.mount('/web', StaticFiles(directory='web/dist'), 'web')  # 管理端页面项目
+# app.mount('/h5', StaticFiles(directory='h5/dist'), 'h5')  # 移动端项目
 
 
 # 定义根路由路径指向的页面

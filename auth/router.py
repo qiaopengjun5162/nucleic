@@ -15,11 +15,11 @@ from utils.token import create_token
 from .schemas import Token, User, UserCreate
 from .services import authenticate_user, get_user, create_user, get_current_user
 
-route = APIRouter(tags=['登录'])
+route = APIRouter(tags=['登录'])  # 从API文档中定义当前应用路由的标签
 
 
-@route.post('/login', response_model=Token)
-async def login(
+@route.post('/login', response_model=Token)  # 注册路由路径，定义响应模型
+async def login(  # 定义路径操作函数
         form: OAuth2PasswordRequestForm = Depends(),  # 依赖项，登录表单
         db: Session = Depends(get_db)  # 依赖项，数据库会话
 ):
@@ -42,6 +42,6 @@ async def createuser(user: UserCreate, db: Session = Depends(get_db)):
     return create_user(db, user)  # 在数据库中创建用户
 
 
-@route.get("/userinfo", response_model=User)
-async def userinfo(user: User = Depends(get_current_user)):
+@route.get("/userinfo", response_model=User)  # 注册路由路径，定义响应模型
+async def userinfo(user: User = Depends(get_current_user)):  # 定义路径操作函数
     return user
