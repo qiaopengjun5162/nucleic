@@ -35,3 +35,21 @@ def save_person(db: Session, data: Person):
 def get_person(db: Session, zjhm):
     data = db.query(PersonInDB).filter(PersonInDB.zjhm == zjhm).first()
     return data
+
+
+# 分页取出预约信息列表，默认第1页，10条记录
+def list_person(db: Session, params):
+    qcnt = db.query(func.count(PersonInDB.id))  # 用于查询当前条件下的总数量
+    q = db.query(PersonInDB)
+    if params['xm']:
+        q = q.filter(PersonInDB.xm == params['xm'])
+        qcnt = qcnt.filter(PersonInDB.xm == params['xm'])
+    if params['lxdh']:
+        q = q.filter(PersonInDB.lxdh == params['lxdh'])
+        qcnt = qcnt.filter(PersonInDB.lxdh == params['lxdh'])
+    if params['jzdz']:
+        q = q.filter(PersonInDB.jzdz.like('%' + params['jzdz'] + '%'))
+        qcnt = qcnt.filter(PersonInDB.jzdz.like('%' + params['jzdz'] + '%'))
+    cnt = qcnt.scalar()
+    data = q.limit(params['size']).offset((params['page'] - 1) * params['size'])
+    return {"count": cnt, "list": data.all()}
