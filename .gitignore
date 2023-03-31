@@ -184,3 +184,15 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Logs
+logs
+lerna-debug.log*
+
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
